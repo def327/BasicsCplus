@@ -1,0 +1,113 @@
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <ctime>
+
+
+
+
+
+using namespace std;
+
+void sort_array(int *, int , int );
+int n;
+
+int main()
+{
+    srand( time(0) );
+    cout<<"Enter an amount of numbers:";
+    cin>>n;
+    cout<<"\n";
+    int *buff=new int[n];
+    for (int i=0;i<n;i++)
+      {
+         buff[i]=2 + rand() % 20 ;
+      }
+
+    for(int i=0;i<n;i++)
+      {
+          cout<<buff[i];
+          cout<<" ";
+      }
+     cout<<"\n";
+//---запись в фаил в бинарном режиме
+    ofstream outfile("text.txt",ios::binary);
+    for(int i=0;i<n;i++)
+      {
+            outfile.write((char*)&(*buff), n*sizeof(int));
+      }
+    outfile.close();
+    delete []buff;
+    cout<<"File recorded before sort\n";
+
+ //чтение из файла в бинарном  режиме
+    buff=new int[n];
+    ifstream infile("text.txt", ios::binary);
+    infile.read((char*)&(*buff),n*sizeof(int));
+    infile.close();
+
+//сортировка в массиве
+    for(int i = 0; i < n ; i++)
+      {
+          for(int j = i + 1; j < n; j++)
+              {
+                  sort_array(&(*buff),i ,j);
+              }
+      }
+    for(int i=0;i<n;i++)
+      {
+          cout<<buff[i];
+          cout<<" ";
+      }
+
+//запись в фаил отсортированных чисел по убванию в бинарном рижиме!!
+    outfile.open("text.txt",ios::binary);
+    for(int i=0;i<n;i++)
+      {
+            outfile.write((char*)&(*buff), n*sizeof(int));
+      }
+    outfile.close();
+    delete []buff;
+    cout<<"\nFile recorded after sort\n";
+
+
+//запишем в фаил отсортированный массив в бинарном режиме с считаем из фаила
+// отсортированный  масив, для проверки работоспособности программы  специаильно создаю другой буфер для вывода
+
+    int *buff2=new int[n]; // для проверки создаю другйо контейнер
+    infile.open("text.txt", ios::binary);
+    infile.read((char*)&(*buff2),n*sizeof(int));
+    infile.close();
+
+ //выведем числа на экран после записи->чтения->сортировки->записи->чтения в бинарном режиме
+
+    for(int i=0;i<n;i++)
+      {
+          cout<<buff2[i];
+          cout<<" ";
+      }
+    delete [ ] buff2;
+    cout<<"\nCheck the file for stable work!";
+}
+// сортировочка пузырьковая
+  void sort_array(int *a, int i, int j)
+      {
+        int temp; // временынй объект
+        for(int i = 0; i < n ; i++)
+            {
+                for(int j = i + 1; j < n; j++)
+                  {
+                      if (a[i] < a[j])
+                        {
+                            temp = a[i];
+                            a[i] = a[j];
+                            a[j] = temp;
+                        }
+                  }
+            }
+       }
+
+
+
+
+

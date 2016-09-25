@@ -1,0 +1,119 @@
+#include <iostream>
+
+using namespace std;
+
+template<class T>
+class Stack
+{
+    T data;
+    Stack *head;
+    Stack *prev;
+ public:
+    Stack();
+    ~Stack();
+    void push(T);
+    void pop();
+    void show();
+    void all_stack_delete();
+};
+
+
+
+int main()
+{
+
+   Stack<int>s;
+   s.push(5.6);
+   s.push(6.19);
+   s.push(8);
+   s.pop();
+   s.pop();
+   s.pop();
+   s.pop();
+   s.push(7);
+   s.push(9);
+   s.show();
+   s.all_stack_delete();
+
+   Stack<char>s2;
+   s2.push('g');
+   s2.show();
+   s2.all_stack_delete();
+
+   Stack<string>s3;
+   s3.push("English");
+   s3.push("is");
+   s3.push("a language");
+   s3.show();
+   s3.all_stack_delete();
+
+
+
+    return 0;
+}
+
+template<class T>
+Stack<T>::Stack()
+  {
+    head=NULL;
+  }
+
+template<class T>
+Stack<T>:: ~Stack()
+  {
+
+  }
+
+template<class T>
+void Stack<T>::all_stack_delete()
+  {
+     while(head!=NULL)
+      {
+          Stack *temp=head->prev;
+          delete head;
+          head=temp;
+      }
+  }
+
+template<class T>
+void Stack<T>::push(T d)
+  {
+    Stack *new_elem=new Stack;
+    new_elem->data=d;
+    new_elem->prev=head;
+    head=new_elem;
+  }
+
+template<class T>
+void Stack<T>::pop()
+  {
+     if (head==NULL)
+      {
+          cout<<"Stack is empty!!!";
+      }
+     else
+      {
+        Stack *temp=head->prev;
+        delete head;
+        head=temp;
+      }
+  }
+
+template<class T>
+void Stack<T>::show()
+  {
+    if (head==NULL)
+      {
+          cout<<"Stack is empty!!!";
+      }
+     else
+      {
+        Stack *temp=head;
+        while(temp!=NULL)
+          {
+            cout<<"\n"<<(temp->data)<<"\n";
+            temp=temp->prev;
+          }
+      }
+  }
+

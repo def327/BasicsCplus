@@ -1,0 +1,169 @@
+#include <iostream>
+#include <list>
+#include <algorithm>
+#include <iomanip>
+
+using namespace std;
+
+
+class Project
+ {
+public:
+   string name;
+   int days_to_completion;
+
+   Project()
+      {
+          name = " ";
+          days_to_completion = 0;
+      }
+
+   Project(string n, int d)
+      {
+          name = n;
+          days_to_completion = d;
+      }
+
+   void add_days(int i)
+      {
+          days_to_completion += i;
+      }
+   void sub_days(int i)
+      {
+          days_to_completion -= i;
+      }
+   bool completed()
+      {
+          return !days_to_completion;
+      }
+
+   void report()
+      {
+          cout <<setw(25)<<name << ": "<<days_to_completion<<" days to complete\n";
+      }
+   bool operator==(const Project&obj)
+       {
+          return ( this->days_to_completion==obj.days_to_completion)?true:false;
+       }
+   bool operator<(const Project&obj)
+       {
+           return ( this->days_to_completion<obj.days_to_completion)?true:false;
+       }
+};
+
+
+int main()
+{
+    list<Project>p_list;
+    list<Project>::iterator it;
+    string name;
+    string exit_program="exit";
+    int days=0;
+    int val=0;
+    int max_val=0;
+    bool again=true;
+   //-----Заполнение списка
+   while(again)
+   {
+   cout<<"Type the number of projects:";
+   cin>>max_val;
+   if(max_val==0)
+      {
+          again=true;
+      }
+      else
+        {
+            again=false;
+        }
+   }
+   cout<<"Write the name's of the  projects with their days to complete\n\n";
+   while(val<max_val)
+   {
+      cout<<"Please enter the name of project#"<<val+1<<":\n";
+      cin>>name;
+      cout<<"Please enter the days of completion for the project "<<"'"<<name<<"':"<<"\n";
+      cin>>days;
+      p_list.push_back(Project(name,days));
+      val++;
+   }
+    cout<<endl;
+  //----редактирование  количества дней до заврешения для проекта
+    char answer;
+    bool flag=true;    //флаг для управления меню
+    bool is=false;
+while(flag==true)
+  {
+    cout<<"\n---Please select the project  to  change days---\n";
+    cout<<"-1)-type the name of the project to correct the days of completion\n";
+    cout<<"-2)-type 'exit' to make exiting the program\n";
+    cout<<"\n--------------------------------------------------\n";
+    p_list.sort();
+    p_list.reverse();
+    it=p_list.begin();
+    while(it!=p_list.end())
+      {
+          (*it).report();
+          it++;
+      }
+    cout<<"\n--------------------------------------------------\n";
+    cin>>name;
+    it=p_list.begin();
+    flag=false;
+    while(it!=p_list.end())
+      {
+          if(name==exit_program)
+            {
+                cout<<"Exiting the program....\n";
+                return 0;
+            }
+          if(name==(*it).name)
+            {
+              is=true;
+              cout<<"Now you work with "<<(*it).name<<"\n";
+              cout<<"type '+' to add days\ntype '-' to sub days from the project's sums days of  completion\ntype 'b' to back to the list of projects\n";
+              cin>>answer;
+              cout<<endl;
+              switch( answer)
+                {
+                  case '+':
+                    {
+                        cout<<"How mush days do you want to add to the project's sums days of  completion?\n";
+                        cin>>days;
+                        (*it).add_days(days);
+                        break;
+                    }
+                  case '-':
+                    {
+                        cout<<"How mush days do you want to sub from the project's sums days of  completion?\n";
+                        cin>>days;
+                        (*it).sub_days(days);
+                        break;
+                    }
+                  case 'b':
+                    {
+                        break;
+                    }
+                  default:
+                    {
+                        break;
+                    }
+                }
+              is=false;
+              break;
+            }
+          else
+            {
+               it++;
+               if (it==p_list.end())
+                {
+                    if(is==false)
+                      {
+                          cout<<"\n---!try a new name!---\n";
+                          break;
+                      }
+                }
+            }
+      }
+    flag=true;
+  }
+}

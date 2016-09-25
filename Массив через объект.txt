@@ -1,0 +1,82 @@
+#include iostream
+#include cstdlib
+
+
+using namespace std;
+
+
+
+    class Array
+{
+     int sz;
+     int p;
+public
+    Array (const Array &obj);
+    Array(int s)
+      {
+          sz=s;
+          coutnUsual constructorn;
+          p=new int [sz];
+      }
+    ~Array()
+       {
+          coutnDestructorn;
+          delete []p;
+       }
+   ------перегрузка оператора [ ] для класса
+       int& operator[](int i)
+       {
+          if(i0  isz)
+          {
+            coutWrong message!!!;
+            exit(0);
+          }
+              return p[i];
+       }
+
+
+
+
+
+    int& put(int i)  возращаеться имя переменная p[i]
+   {
+      if( i=0 && isz)
+      {
+         return p[i];
+      }
+        else exit(0); exit-завершение программы
+   }
+    int get(int i)     возвращаеться значение переменной
+    {
+       if( i=0 && isz)
+        {
+            return p[i];
+        }
+          else exit(0);
+    }
+
+};
+
+ArrayArray(const Array &obj)   изменяем конструктор копирования
+{
+    sz=obj.sz;
+    p=new int [sz];       новый адрес для нового объекта с массивом
+    for (int i=0;isz;i++)
+      {
+          p[i]=obj.p[i];          копирвоание элементов из первого объекта в другой
+      }
+     coutConstructor of copy;
+}
+
+
+int main()
+{
+      Array ob1(5);
+      ob1[0]=4;
+      ob1[1]=4+ob1[0];
+      coutob1[0]endl;
+      coutob1[1]endl;
+
+
+
+}

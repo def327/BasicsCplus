@@ -1,0 +1,151 @@
+#include <iostream>
+#include <clocale>
+#include<cstdlib>
+#include <iomanip>
+#include <cstring>
+using namespace std ;
+
+struct Worker
+{
+    char name[30];
+    unsigned int salary;
+    char post[30];
+};
+
+void  make_data (int  ,Worker * );
+void show_data (int ,Worker * );
+void sort_data (int ,Worker *, bool );
+
+
+int n;
+int choice;
+
+
+ int    main    (   )
+{
+    setlocale   (LC_CTYPE, "rus");
+    Worker  *w;
+        cout<<"Введите количество работников:\n";
+        cin>>n;
+    w= new Worker [n]; // создаём динамический массив структур типа Worker
+
+          for (int i=0;i<n;i++)
+            {
+                make_data(i ,w);    // создание базы данных
+            }
+
+
+          cout<<"\n\nБаза данных (без сортировки):\n";
+          for (int i=0;i<n;i++)
+          {
+
+                show_data(i,w);     //вывод на экран компьютера в порядке заполнения базы данных
+          }
+
+          cout<<"Введите '1'-отсортировать работников по зарплате\nВведите '2'- отсортировать работников по фамилии\n";
+          cin>>choice;
+            switch (choice)
+            {
+                case 1:
+                  {
+                     cout<<"Отсортированная база данных (по убыванию свреху-вниз):\n";
+                     for (int i=0;i<n;i++)
+                        {
+                            sort_data ( i,w,0);   //сортировка базы данных
+                        }
+                     for (int i=0;i<n;i++)
+                        {
+                            show_data(i,w);     //вывод на экран компьютера отсортированной базы данных
+                        }
+
+                        break;
+                  }
+
+                case 2:
+                  {
+                      cout<<"Отсортированная база данных (в алфавитном порядке):\n";
+
+                      for (int i=0;i<n;i++)
+                        {
+                            sort_data ( i,w,1);   //сортировка базы данных
+                        }
+                     for (int i=0;i<n;i++)
+                        {
+                            show_data(i,w);     //вывод на экран компьютера отсортированной базы данных
+                        }
+                        break;
+                  }
+
+                default :
+                  {
+                     cout<<"\nВы не сортировали базу данных!!\n";
+                  }
+            }
+
+   delete [] w;   //освобождение памяти
+}
+
+
+
+
+
+
+void  make_data (int i,Worker *w)
+  {
+      cout<<"\nВведите фамилию работника№"<<i+1<<":\n";
+      cin>> w[i].name;
+      cout<<"\nВведите з/п работника№"<<i+1<<":\n";
+      cin>> w[i].salary;
+      cout<<"\nВведите должность работника№"<<i+1<<":\n";
+      cin>> w[i].post;
+      return;
+  }
+
+void show_data (int i,Worker *w)
+{
+    cout<<setw(10)<<w[i].name<<"  "<<setw(10)<<w[i].salary<<"$"<<"  "<<setw(10)<<w[i].post<<endl;
+}
+
+void sort_data (int i,Worker *w, bool flag)
+{
+   switch (flag)
+     {
+                  case 0:
+                    {
+                          Worker temp; // создаём структурную переменную  для  замещения данных типа Worker в сортировке
+                              for (int i=0;i<n;i++)
+                                {
+                                    for(int j = i + 1; j < n; j++)
+                                      {
+                                            if (w[i].salary < w[j].salary)
+                                              {
+                                                  temp = w[i];
+                                                  w[i] = w[j];
+                                                  w[j] = temp;
+                                              }
+                                      }
+                                }
+                    }
+
+                  case 1:
+                    {
+                           Worker temp;        // создаём структурную переменную  для  замещения данных типа Worker в сортировке
+                              for (int i=0;i<n;i++)
+                                {
+                                    for(int j = i + 1; j < n; j++)
+                                      {
+
+                                            if (strcmp(w[i].name , w[j].name) > 0)  //используем функцию сравнения из стнадратной библеотеки
+                                              {
+                                                  temp = w[i];
+                                                  w[i] = w[j];
+                                                  w[j] = temp;
+                                              }
+                                      }
+                                }
+                    }
+
+
+
+     }
+}

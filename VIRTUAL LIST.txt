@@ -1,0 +1,258 @@
+#include <iostream>
+
+
+using namespace std;
+
+
+class List
+{
+  public:
+    List *head;
+    List *tail;
+    List *next;
+    int n;
+    List ()
+      {
+          head=NULL;
+          tail=NULL;
+          next=NULL;
+      }
+     virtual void push(int){};
+     virtual void pop(){};
+     virtual void show(){};
+};
+
+//--------- Class of Queue
+class Queue:public List
+{
+  public:
+
+void  push(int d)
+{
+    List *item;
+    item = new List;
+    item->n = d;
+    // добавление элемента в конец списка
+    if(tail) tail->next = item;
+    tail = item;
+    item->next = NULL;
+    if(!head) head = tail;
+}
+
+void pop()
+{
+    int i;
+    List *p;
+    if(!head)
+      {
+        cout << "\nList is empty\n";
+      }
+     else
+      {
+          // удаление элемента из начала списка
+          i = head->n;
+          p = head;
+          head = head->next;
+          delete p;
+          cout<<"\nthe element "<<i<<" was deleted from the queue\n";
+      }
+}
+
+void show()
+{
+    List *temp=head; //Временный указатель на начало списка
+    if (!temp)
+      {
+          cout<<"the list is empty!!";
+      }
+        else
+          {
+              cout<<"\nThis is the queue: ";
+              while (temp!=NULL) //Пока в списке что-то встречается
+                {
+                  cout<<temp->n<<" "; //Выводим значения из списка на экран
+                  temp=temp->next; //Сдвигаем указатель на начало на адрес следующего элемента
+                }
+              cout<<endl;
+              delete temp;
+          }
+}
+
+};
+
+//---------Class of Stack
+class Stack:public List
+{
+    public:
+void push(int d)
+{
+    List *newdata = new List;
+    newdata ->  n = d;
+    newdata -> next = head;
+    head = newdata;
+
+}
+
+void show()
+{
+    if (head ==NULL)
+    {
+       cout<<"\nStack is empty!!!\n"<<endl;
+    }
+        else
+          {
+              cout<<"\nThis is the stack: ";
+              List* temp;
+              temp = head;
+              while (temp!=NULL)
+                {
+                    cout<< temp -> n<<" ";
+                    temp = temp -> next;
+                }
+              cout<<endl;
+          }
+}
+
+void pop()
+{
+    if (head==NULL)
+        {
+            cout<<"The Stack is empty!"<<endl;
+        }
+        else
+          {
+              List* temp = new List;
+              temp = head;
+              delete head;
+              head = temp -> next;
+
+          }
+}
+
+};
+
+//----------Функции show() через cout  и pop() без return использовал умылшленно
+//     без учета вашей рекоммендации конкретно только для этой программы)
+
+int main()
+{
+    char ch;
+    int val=1;
+    int act;
+
+    int val_q=1;
+    int act_q=1;
+
+    int val_s=1;
+    int act_s=1;
+
+
+    List *p;
+    Queue ob1;
+    Stack ob2;
+while(val)
+{
+cout<<"\nChoose  the stack or the queue, type: s/q?:\n";
+cin>>ch;
+  switch (ch)
+    {
+      case 'q':
+        {
+            p=&ob1;
+            while(val_q)
+            {
+            cout<<"Now you are working with queue\n";
+            cout<<"Please select the function for the queue:\n";
+            cout<<"type '1' - to select pop\n";
+            cout<<"type '2' - to select push\n";
+            cout<<"type '3' - to select show\n";
+            cout<<"type '4' - to return to the main menu\n";
+            cin>>act_q;
+            switch (act_q)
+              {
+                case 1:
+                    {
+                        p->pop();
+                        continue;
+                    }
+                case 2:
+                    {
+                        cout<<"\nType the number\n:";
+                        int elem;
+                        cin>>elem;
+                        p->push(elem);
+                        continue;
+                    }
+                case 3:
+                    {
+                        p->show();
+                        continue;
+                    }
+                case 4:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        continue;
+                    }
+              }
+            break;
+            }
+        }
+      break;
+      case 's':
+        {
+            p=&ob2;
+            while(val_s)
+            {
+            cout<<"Now you are working with stack\n";
+            cout<<"Please select the function for the stack:\n";
+            cout<<"type '1' - to select pop\n";
+            cout<<"type '2' - to select push\n";
+            cout<<"type '3' - to select show\n";
+            cout<<"type '4' - to return to the main menu\n";
+            cin>>act_s;
+            switch (act_s)
+              {
+                case 1:
+                    {
+                        p->pop();
+                        continue;
+                    }
+                case 2:
+                    {
+                        cout<<"\nType the number\n:";
+                        int elem;
+                        cin>>elem;
+                        p->push(elem);
+                        continue;
+                    }
+                case 3:
+                    {
+                        p->show();
+                        continue;
+                    }
+                case 4:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        continue;
+                    }
+              }
+            break;
+            }
+      }
+      default:
+        {
+            continue;
+        }
+      break;
+  }
+}
+delete p;
+return 0;
+}
+

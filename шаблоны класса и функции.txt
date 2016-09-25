@@ -1,0 +1,50 @@
+#include <iostream>
+
+using namespace std;
+//------шаблон функции
+template < typename T > void swtch (T&a,T&b)  //typename( синоним class)-пользоваельский тип
+{
+    T tmp;
+    tmp=a;
+    a=b;
+    b=tmp;
+}
+//------шаблон класса
+template < class F > class numAB
+{
+    private:
+     F a;
+     F b;
+     public:
+        void swapab (F&a,F&b);
+};
+
+
+
+
+
+int main()
+{
+
+    int num=6;
+    int bip=8;
+    swtch(num,bip);
+    cout <<"num="<<num;
+    cout<<"\n";
+    cout<<"bip="<<bip;
+
+    numAB<int>obj;
+
+
+
+    return 0;
+}
+
+//-------синтаксис как писать метод шаблона класса
+template <class F> void numAB<F> :: swapab(F&a,F&b)
+  {
+      F tmp;
+      tmp=a;
+      a=b;
+      b=tmp;
+  }

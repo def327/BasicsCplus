@@ -1,0 +1,43 @@
+#include <iostream>;
+#include <clocale>;
+#include<cstdlib>;
+#include <iomanip>;
+using namespace std ;
+
+void prime_num_list(int n );
+
+ int    main    (   )
+{   setlocale   (LC_CTYPE, "rus");
+    cout<<"¬ведите число n"<<endl;
+    int n;
+    cin>>n;
+    cout<<"—писок простых чисел:\n";
+    prime_num_list(n);
+}
+
+  void prime_num_list ( int n )
+
+  {
+      int k=0;
+     cout<<endl<<endl;
+    for (int i =0;i<=n;i++)
+    {
+        if (i==1 ||i==0 )
+        {
+            continue ;
+        }
+        for (int a=2;a<=i*i ;a++)
+          {
+              if   (  i%a==0 )
+                  {
+                      k++;
+                      if(k>=2)
+                        break;
+                  }
+          }
+        if (k<=1)
+        cout<<i<<endl;
+        k=0;
+    }
+  return ;
+  }

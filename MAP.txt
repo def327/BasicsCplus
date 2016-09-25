@@ -1,0 +1,25 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+
+
+int main()
+{
+
+      map<char,int> m; //1-ое-ключ, 2-ое что будем хранить
+       for(int i=0;i<10;i++)
+        {
+          m.insert(pair<char,int>('A'+i,i));
+        }
+    char ch;
+    cin>>ch;
+    map<char,int>::iterator p = m.find(ch); //указатель на объект типа map
+      if(p!= m.end())
+      {
+        cout<<p->second;    //через указтелдьз на объект вывести не ключ а информацию которую содержит контейнер
+      }
+        else cout<<"There isn't the key!";
+}

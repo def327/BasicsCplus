@@ -1,0 +1,75 @@
+#include <iostream>
+#include <iomanip>
+#include "STRUCTstudent.h"
+
+using namespace std ;
+    struct student
+    {
+        char surname[20];
+        unsigned int gnub;
+        double bal;
+    };
+
+
+void disp_4 (int, student * );
+void make_base (int, student * );
+void disp_base (int, student * );
+
+
+ int    main    (   )
+{
+            setlocale   (LC_CTYPE, "rus");
+      cout<<setw(40)<<"Введите количество студентов : ";
+            int n;
+      cin>>n;
+
+            student *s;   //Создание указателя на структурную переменную типа student
+            s= new student [n]; //выделение памяти  для динмачиеского массива струтур на начало которого указывает указатель s
+
+      cout<<setw(1)<<"\nСоздайте базу данных студетов:\n";
+                    for (int i=0;i<n;i++)
+                      {
+                           make_base (i,s);
+                      }
+
+//-------------Вывод всех студентов на экран----------------------
+        cout<<"\nСписок студентов и их краткая характеристика:\n";
+                    for (int i=0;i<n;i++)
+                      {
+                          disp_base(i,s);
+                      }
+        cout<<endl<<endl;
+
+        cout<<"Список студентов с успеваемостью выше 4 баллов:\n";
+                    for   (int i=0;i<n;i++)
+                      {
+                            disp_4 ( i, s );
+                      }
+
+         delete [] s;//Освободим память с начала указателя s[0]
+         return 0;
+
+}
+
+void disp_4 (int i, student *s) // Отображение студентов с успеваемостью выше 4
+      {
+            if  (s[i].bal>4)
+                {
+                   cout<<setw(15)<<s[i].surname<<setw(15)<<s[i].gnub<<setw(15)<<s[i].bal<<endl;
+                }
+      }
+
+void make_base (int i, student *s) //Создание базы данных
+      {
+                   cout<<setw(40)<<"\nВведите имя студента №"<<i+1<<":"<<"\n";
+                    cin>>s[i].surname;
+                    cout<<setw(40)<<"\nВведите номер группы студента\n";
+                    cin>>s[i].gnub;
+                    cout<<setw(40)<<"\nВведите средний бал студента\n";
+                    cin>>s[i].bal;
+      }
+
+void disp_base (int i, student *s) //Отображение всех студентов
+      {
+                    cout<<setw(15)<<s[i].surname<<setw(15)<<s[i].gnub<<setw(15)<<s[i].bal<<endl;
+      }

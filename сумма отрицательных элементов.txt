@@ -1,0 +1,74 @@
+#include <iostream>
+#include <clocale>
+#include<cstdlib>
+#include <iomanip>
+#include <ctime>
+using namespace std ;
+
+
+ int    main    (   )
+{
+    int n;
+    double k=0;
+    int answer;
+  setlocale   (LC_CTYPE, "rus");
+    cout<<"Введите размер массива:\n";
+    cin>>n;
+    double a[n];
+    cout<<"Заполните его  сами?";
+    cout<<"Введите:\n1-для того чтобы заполнить массив самому\n2-для того чтобы заполнить массив случайными числами\n";
+    cin>>answer;
+    srand( time( 0 ) ); //для рандома
+
+      switch (answer)
+          {
+              case 1:
+                {
+                    cout<<"Вводите числа:\n";
+                   for (int i=0;i<n;i++)
+                      {
+                          cin>>a[i];
+                      }
+                    break;
+                }
+
+                case 2:
+                  {
+                        cout<<"Элементы массива:\n";
+                        for (int i=0;i<n;i++)
+
+                          {
+                              a[i]= (double) rand()/RAND_MAX * (100 - (-100)) -100;
+                              cout<<fixed << setprecision(2)<<a[i]<<endl;   // ограничим количество знаков после запятой
+                          }
+                         break;
+                  }
+
+                default :
+                   {
+                        cout<<"Перезагрузите программу)))";
+                   }
+                break;
+          }
+
+
+      cout<<endl<<endl;
+      for (int i=0;i<n;i++)
+        {
+              if   (a[i]<0)
+                  {
+                        cout<<fixed << setprecision(2)<<a[i]<<" ";
+                        k+=a[i];  //суммирование отрицательных чисел
+                  }
+        }
+ if (k!=0)
+          {
+              cout<<"- отрицательные числа в массиве"<<endl<<endl;
+              cout<<k<<"-сумма отрицательных элементов";
+          }
+ if (k==0)
+          {
+              cout<<"Нет отрицательных чисел в массиве!!!";
+          }
+
+}

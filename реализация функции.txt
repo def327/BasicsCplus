@@ -1,0 +1,157 @@
+#include <iostream>
+#include <clocale>
+#include<cstdlib>
+#include <iomanip>
+using namespace std 
+
+ int    main    (   )
+{
+    int a;
+    int b;
+    int c;
+    int bgn ;
+    int edn ;
+    int dx ;
+     setlocale   (LC_CTYPE, "rus");
+//--------- ќбъ€вление  переменных----------------------
+
+
+    cout<<"¬ведите число  a"<<endl;
+
+ start_a:
+         cin>>a;
+         if ( a>30)
+            {
+                cout<<"¬ведите число  a   не больше чем 30!!!"<<endl;
+                goto start_a;
+            }
+
+
+      cout<<"¬ведите число  b   "<<endl;
+
+ start_b:
+        cin>>b;
+        if ( b>30)
+            {
+                cout<<"¬ведите число  b  не больше чем 30!!!"<<endl;
+                goto start_b;
+            }
+
+
+      cout<<"¬ведите число  c "<<endl;
+
+start_c:
+        cin>>c;
+        if ( c>=30)
+            {
+                cout<<"¬ведите число  c  не больше чем 30!!!"<<endl;
+                goto start_c;
+            }
+
+
+      cout<<"¬ведите число  begin  "<<endl;
+
+start_bgn:
+      cin>>bgn;
+        if ( bgn>30)
+            {
+                cout<<"¬ведите число  begin   не больше чем 30!!!"<<endl;
+                goto start_bgn;
+            }
+
+
+      cout<<"¬ведите число  end "<<endl;
+
+start_edn:
+      cin>> edn;
+      if ( edn>1000)
+            {
+                cout<<"¬ведите число  end не больше чем 30!!!"<<endl;
+                goto start_edn;
+            }
+
+      cout<<"¬ведите число  dx "<<endl;
+
+start_dx:
+      cin>> dx;
+      if ( dx>=4)
+            {
+                cout<<"¬ведите число  dx  не больше чем 4 !!!"<<endl;
+                goto start_dx;
+            }
+
+
+
+
+            cout<<"a="<<a<<endl;
+            cout<<"b="<<b<<endl;
+            cout<<"c="<<c<<endl;
+            cout<<"begin="<<bgn<<endl;
+            cout<<"end="<<edn<<endl;
+
+
+
+
+ //---------‘ункции------------------
+
+    if ( (a<0) && (b!=0 ))            //-----1-а€ функци€
+      {
+          cout<<  "  --- a*( x^2)+b ----1-а€ функци€     " <<endl;
+          cout<<setw (2)<<" x"<<setw( 9  )<<"y"<<endl;
+          while(  bgn <= edn   )
+                {
+                   cout<< setw( 2) << bgn<<setw(9)<<(a*( bgn*bgn) +b)<<endl;
+                  bgn+=dx;
+
+                }
+            return 0;
+      }
+
+
+    if  ( (a>0)&& (b==0)   )        //------2-а€ функци€
+      {
+          cout<<  "  --- ((x-a)/(x-c)) ----2-а€ функци€     " <<endl;
+          cout<<setw (2)<<" x"<<setw( 9  )<<"y"<<endl;
+          while (bgn <= edn)
+                {
+                      if (bgn==2)
+                          {
+                              cout<<"ѕри деление на 2 в знаменателе получаетсь€  0!!!"<<endl;
+                              cout<<"поэтому прибавим к x  единцу, чтобы исключить ошибку!"<<endl;
+                              bgn=bgn+1;
+                          }
+                      cout<< setw( 2) << bgn<<setw(9)<<((bgn-a)/(bgn-c))<<endl;
+                      bgn+=dx;
+                }
+           return 0;
+      }
+
+
+    else                                         //-------3-а€  функци€
+        {
+              cout<<  "  -------x/c ------3-а€ функци€     " <<endl;
+              cout<<setw (2)<<" x"<<setw( 9  )<<"y"<<endl;
+             while (bgn <= edn)
+                    {
+                              if ( c==0)
+                                    {
+                                        cout<<"«наменатель равен  0!!!"<<endl;
+                                        cout<<"поэтому введите заново переменную ""c" ", чтобы исключить ошибку!"<<endl;
+                                        cin>>c;
+start_c_new:
+                                        cin>>c;
+                                        if ( c>=30)
+                                            {
+                                                  cout<<"¬ведите число  c  не больше чем 30!!!"<<endl;
+                                                  goto start_c_new;
+                                            }
+                                    }
+                              cout<< setw( 2) << bgn<<setw(9)<<(bgn/c)<<endl;
+                              bgn+=dx;
+
+                    }
+            return 0;
+        }
+
+
+  }

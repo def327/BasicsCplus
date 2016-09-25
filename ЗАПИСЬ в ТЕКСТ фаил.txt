@@ -1,0 +1,107 @@
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <ctime>
+
+
+
+
+using namespace std;
+
+void sort_array(int *a, int i, int j);
+int n;
+
+int main()
+{
+    srand( time(0) );
+    cout<<"Enter an amount of numbers:";
+    cin>>n;
+    cout<<"\n";
+    int *buff=new int[n];
+    for (int i=0;i<n;i++)
+      {
+          buff[i]= 1 + rand() % 20 ;
+      }
+
+    for(int i=0;i<n;i++)
+      {
+          cout<<buff[i];
+          cout<<" ";
+      }
+     cout<<"\n";
+//---запись в фаил в текстовом режиме
+    ofstream outfile("text.txt");
+    for(int i=0;i<n;i++)
+      {
+          outfile<<buff[i];
+          outfile<<"\n";
+      }
+    outfile.close();
+    delete []buff;
+    cout<<"File recorded before sort\n";
+
+ //чтение из файла в текстовом режиме
+
+    buff=new int[n];
+    ifstream infile("text.txt");
+    for(int i=0;i<n*2;i++)
+      {
+          infile>>buff[i];
+      }
+    infile.close();
+
+//сортировка в массиве
+    for(int i = 0; i < n ; i++)
+      {
+          for(int j = i + 1; j < n; j++)
+              {
+                  sort_array(&(*buff),i ,j);
+              }
+      }
+    for(int i=0;i<n;i++)
+      {
+          cout<<buff[i];
+          cout<<" ";
+      }
+
+//запись в фаил отсортированных чисел по убванию в текстовом рижиме!!
+    outfile.open("text.txt");
+    outfile<<"Array after sort:\n";
+    for(int i=0;i<n;i++)
+      {
+          outfile<<buff[i];
+          outfile<<"\n";
+      }
+    outfile.close();
+    delete []buff;
+    cout<<"\nFile recorded after sort\n";
+    cout<<"\nYou can open  the file text.txt (using notepad) at the program directory and check that the numbers were written correctly.\n";
+
+
+}
+// сортировочка пузырьковая
+  void sort_array(int *a, int i, int j)
+      {
+        int temp;
+        for(int i = 0; i < n ; i++)
+            {
+                for(int j = i + 1; j < n; j++)
+                  {
+                      if (a[i] < a[j])
+                        {
+                            temp = a[i];
+                            a[i] = a[j];
+                            a[j] = temp;
+                        }
+                  }
+            }
+       }
+
+
+
+
+
+
+
+
+

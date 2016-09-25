@@ -1,0 +1,206 @@
+#include <iostream>
+#include <clocale>
+#include <cstring>
+using namespace std;
+
+
+class rect
+{
+  private:
+     int *length;
+     int *width;
+  public:
+
+//-------конструкторы, конструктор копий, деструктор----
+      rect()
+        {
+          cout<<"Cработал  конструктор без параметров!"<<endl;
+          length=new int;
+          width=new int;
+          *length=0;
+          *width=0;
+      }
+      rect(int l,int w)
+        {
+          cout<<"Cработал  конструктор c параметрами!"<<endl;
+          length=new int;
+          width=new int;
+          *length=l;
+          *width=w;
+      }
+      rect(const rect&obj)
+        {
+          cout<<"Cработал  конструктор копий!"<<endl;
+          length=new int;
+          width=new int;
+          *length=*obj.length;
+          *width=*obj.width;
+      }
+      ~rect()
+        {
+           cout<<endl<<"Сработал деструктор!";
+        }
+//---------сетеры и гетеры-----------------------------------  -
+      void show_length()
+        {
+          cout<<endl<<"Длина="<<(*length)<<"см."<<endl;
+        }
+      void show_width()
+        {
+          cout<<"Ширина="<<(*width)<<"см."<<endl;
+        }
+      void set_length(int l)
+       {
+           *length=l;
+       }
+      void set_width(int w)
+       {
+          *width=w;
+       }
+//------методы периметр и площадь
+      void perim()
+       {
+            if (*length == *width)
+              {
+                 cout<<endl<<"Это квадрат!"<<endl;
+                 cout<<"Периметр="<<(*length)*4<<"см."<<endl;
+               }
+              else
+                {
+                    cout<<endl<<"Это прямоугольник!"<<endl;
+                    cout<<"Периметр="<<((*length)+(*width))*2<<"см."<<endl;
+                }
+       }
+      void square()
+       {
+          if (*length == *width)
+              {
+                 cout<<endl<<"Это квадрат!"<<endl;
+                 cout<<"Площадь="<<((*length)*(*length))<<"см.^2"<<endl;
+               }
+              else
+                {
+                    cout<<endl<<"Это прямоугольник!"<<endl;
+                    cout<<"Площадь="<<((*length)*(*width))<<"см.^2"<<endl;
+                }
+       }
+ //-----перегруженные операторы!!!
+      void operator+= ( rect &obj)
+       {
+          *length+=*obj.length;
+          *width+=*obj.width;
+       }
+      rect& operator= (rect  &obj)
+       {
+           *length=*obj.length;
+           *width=*obj.width;
+            return *this;
+       }
+      rect& operator= (const int &n)
+       {
+           *length=n;
+           *width=n;
+            return *this;
+       }
+      rect& operator+ ( const rect &obj)
+       {
+          rect tmp;
+          *tmp.length=*length+*obj.length;
+          *tmp.width=*width+*obj.width;
+           return tmp;
+       }
+      rect operator- ( const rect &obj)
+       {
+          rect tmp;
+          *tmp.length=*length-*obj.length;
+          *tmp.width=*width-*obj.width;
+           return tmp;
+       }
+      rect& operator++()
+        {
+            ++*length;
+            ++*width;
+            rect tmp;
+            tmp.length=new int;
+            tmp.width= new int;
+            *tmp.length=*length;
+            *tmp.width= *width;
+            return tmp;
+        }
+      rect& operator++(int n)
+        {
+            rect temp = *this;
+            ++*this;
+            return temp;
+        }
+      bool operator==(const rect&obj)
+       {
+           return ((*length==*obj.length)&&(*width==*obj.width))?true:false;
+       }
+     friend  rect& operator+(const int &n,const rect &obj);
+     friend rect& operator+(const rect &obj,const int &n);
+};
+
+int main()
+{  //Инициализация для  кодировки, поддерживающая кирилицу в консоли
+    setlocale   (LC_CTYPE, "rus");
+    //Баловство с функциями как-только можно)
+        rect a(10,5);
+        rect b(15,6);
+        rect c(3,4);
+        a=c+b;
+        a++;
+        c=++a;
+        a.show_length();
+        a.show_width();
+        a=c;
+        a.show_length();
+        a.show_width();
+        c=b+3;
+        rect d;
+        c=4+d;
+        c.show_length();
+        c.show_width();
+        c=5;
+        c.show_length();
+        c.show_width();
+        if (a==b)
+          {
+              cout<<"объекты равны!";
+          }
+              else
+                {
+                    cout<<"объекты не равны!";
+                }
+          cout<<"-------";
+          rect f(100,56);
+          rect u;
+          u=f;
+        if (u==f)
+         {
+            cout<<"объекты равны!";
+         }
+              else
+                {
+                    cout<<"объекты не равны!";
+                }
+    return 0;
+}
+
+rect& operator+(const int &n,const rect &obj)
+ {
+      rect tmp;
+      *tmp.length=*obj.length+n;
+      *tmp.width=*obj.width+n;
+      return tmp;
+}
+
+rect& operator+(const rect &obj,const int &n)
+ {
+      rect tmp;
+      *tmp.length=*obj.length+n;
+      *tmp.width=*obj.width+n;
+      return tmp;
+}
+
+

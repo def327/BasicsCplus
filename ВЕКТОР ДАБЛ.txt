@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+class A
+{
+  double d;
+public:
+  A()
+    {
+    }
+  A(double x)
+    {
+      d=x;
+    }
+  double getd()
+    {
+      return d;
+    }
+};
+
+int main()
+{
+  vector<A>v;
+  v.push_back(A(3));
+}
+
+// можно записывать не в классе, это как не методы класса функции!
+bool operator<(A&a,A&b)
+    {
+      return a.getd()<b.getd();
+    }
+bool operator==(A&a,A&b)
+    {
+      return b.getd()==b.getd();
+    }

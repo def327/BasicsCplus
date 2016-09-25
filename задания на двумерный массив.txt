@@ -1,0 +1,65 @@
+#include <iostream>;
+#include <clocale>;
+#include<cstdlib>;
+#include <iomanip>;
+#include <ctime>;
+using namespace std ;
+
+
+ int    main    (   )
+{
+    setlocale   (LC_CTYPE, "rus");
+
+    int n;
+      cout<<"Введите кол-во строк:\n";
+        cin>>n;
+    int k;
+      cout<<"Введите кол-во столбцов:\n";
+        cin>>k;
+      cout<<endl;
+    int counter=n;
+    double a[n][k];
+    int j=0;
+
+    //--------заполнение массива--------
+        cout<<"Введите элемент двумерного массива:"<<endl<<endl;
+        for (int i=0;i<n;i++)
+              {
+                  cout<<"----Строка номер:"<<i+1<<endl;
+
+                  for ( j=0;j<k;j++)
+                    {
+                      cin>>a[i][j];
+                    }
+              }
+
+//-----Вывод полученного массива на экран
+
+  cout<<"Массив\n";
+        for (int i=0;i<n;i++)
+              {
+                  for (int j=0;j<k;j++)
+                    {
+                        cout<<setw(12)<<fixed << setprecision(3)<<a[i] [j]<<"  ";
+                    }
+                  cout<<endl;
+              }
+//-------кол-во строк содержащих ненулевые значения
+
+       for (int i=0;i<n;i++)
+              {
+                  for (int j=0;j<k;j++)
+                  {
+                      if (a[i][j]==0)
+                          {
+                                counter--;
+                                break;
+                          }
+                  }
+                  cout<<endl;
+              }
+
+cout<<"Кол-во строк, содержащих ненулевые зачения: "<<counter<<"\n\n";
+
+}
+

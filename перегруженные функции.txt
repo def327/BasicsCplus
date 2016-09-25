@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+
+  class coord
+  {
+      int x;
+      int y;
+
+  public:
+       coord()
+          {
+            x=0;
+            y=0;
+          }
+        coord(int xm,int ym)
+          {
+              x=xm;
+              y=ym;
+          }
+        void  show()
+            {
+                cout<<"x="<<x<<"    "<<"y="<<y;
+            }
+         coord operator- (const coord &obj); //оператор "-"
+  //       coord& operator= ( coord &obj);    //оператор
+         int operator==(const coord &obj);  //оператор "=="
+         friend coord operator+(const int &n, const coord &obj); //оператор "+" для int  и coord
+         friend coord operator+( const coord &obj,const int &n); // перегружаем функцию для систуации coord и int
+  };
+int main()
+{
+    coord ob1,ob2(1,5);
+    ob1 =  ob2+3;
+    ob1.show();
+    ob2=ob1+4;
+    ob2.show();
+
+
+
+
+}
+
+coord coord::operator-(const coord &obj)
+    {
+        coord tmp;          //создаём буфер хранения
+        tmp.x=x-obj.x;
+        tmp.y=y-obj.y;
+        return tmp;
+    }
+/*coord& coord::operator=( coord &obj)
+{
+    x=obj.x;
+    y=obj.y;
+    return *this;   //возращаем объект по указтелю который вызвал  функцию равно  и был изменен
+}
+
+int coord::operator==(const coord &obj)
+{
+    return ((x==obj.x)&&(y==obj.y))?1:0;
+}
+
+*/
+/*coord coord::operator+(int n)
+{
+    x=x+n;
+    y=y+n;
+    return *this;
+}
+
+*/
+coord operator+(const int &n,const coord &obj)
+{
+    coord tmp;
+    tmp.x=obj.x+n;
+    tmp.y=obj.y+n;
+    return tmp;
+}
+
+coord operator+(const coord &obj,const int &n)
+{
+    coord tmp;
+    tmp.x=obj.x+n;
+    tmp.y=obj.y+n;
+    return tmp;
+}

@@ -1,0 +1,96 @@
+#include <iostream>
+
+
+using namespace std;
+
+
+class Queue
+{
+  private:
+    int data;
+    Queue *head;
+    Queue *tail;
+    Queue *next;
+  public:
+    Queue ()
+      {
+          head=NULL;
+          tail=NULL;
+          next=NULL;
+      }
+
+void  push(int d)
+{
+    Queue *item;
+    item = new Queue;
+    item->data = d;
+    // добавление элемента в конец списка
+    if(tail) tail->next = item;
+    tail = item;
+    item->next = NULL;
+    if(!head) head = tail;
+}
+
+int pop()
+{
+    int i;
+    Queue *p;
+    if(!head)
+      {
+        cout << "\nList is empty\n";
+        return 0;
+      }
+    // удаление элемента из начала списка
+    i = head->data;
+    p = head;
+    head = head->next;
+    delete p;
+    return i;
+}
+
+void show()
+{
+    Queue *temp=head; //Временный указатель на начало списка
+    if (!temp)
+      {
+          cout<<"the list is empty!!";
+      }
+        else
+          {
+              while (temp!=NULL) //Пока в списке что-то встречается
+                {
+                  cout<<temp->data<<" "; //Выводим значения из списка на экран
+                  temp=temp->next; //Сдвигаем указатель на начало на адрес следующего элемента
+                }
+              cout<<endl;
+          }
+}
+
+};
+
+
+
+int main()
+{
+    Queue obj;
+    obj.push(6);
+    obj.push(7);
+    obj.push(10);
+    obj.push(14);
+    obj.pop();
+    obj.pop();
+    obj.pop();
+    obj.pop();
+    obj.push(25);
+    obj.push(28);
+ //   obj.push(6);
+ //   obj.push(8);
+  //  obj.push(5);
+    obj.show();
+
+    return 0;
+}
+
+
+
+

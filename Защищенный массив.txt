@@ -1,0 +1,70 @@
+#include <iostream>
+#include <cstdlib>
+
+
+using namespace std;
+
+
+
+    class Array
+{
+     int sz;
+     int *p;
+public:
+    Array (const Array &obj);
+    Array(int s)
+      {
+          sz=s;
+          cout<<"\nUsual constructor\n";
+          p=new int [sz];
+      }
+    ~Array()
+       {
+          cout<<"\nDestructor\n";
+          delete []p;
+       }
+    int& put(int i) // возращаеться имя переменная p[i]
+   {
+      if( i>=0 && i<sz)
+      {
+         return p[i];
+      }
+        else exit(0); //exit-завершение программы
+   }
+    int get(int i)    // возвращаеться значение переменной
+    {
+       if( i>=0 && i<sz)
+        {
+            return p[i];
+        }
+          else exit(0);
+    }
+
+};
+
+Array::Array(const Array &obj)  // изменяем конструктор копирования
+{
+    sz=obj.sz;
+    p=new int [sz];       //новый адрес для нового объекта с массивом
+    for (int i=0;i<sz;i++)
+      {
+          p[i]=obj.p[i];          //копирвоание элементов из первого объекта в другой
+      }
+     cout<<"Constructor of copy";
+}
+
+int main()
+{
+    Array ar(10);
+    ar.put(0)=1;    //данная функция вренет конкретно p[0];
+    for (int i=0;i<10;i++)
+      {
+        ar.put(i)=i;
+      }
+    for (int i=9;i>=0;i--)
+      {
+        cout<<ar.get(i)<<endl;
+      }
+     Array ar2=ar;
+
+}

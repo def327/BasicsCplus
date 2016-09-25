@@ -1,0 +1,98 @@
+#include <iostream>
+#include <clocale>
+#include<cstdlib>
+#include <iomanip>
+#include <ctime>
+
+using namespace std;
+
+struct datagram
+{
+   int data;            // поле данных
+   datagram * next;     // указатель на следющий элемент типа datagram
+};
+
+class Stack
+{
+  private:
+    datagram* first;            //указатель на вершину стека
+
+  public:
+    Stack()
+      {
+         first  = NULL;
+      }
+  void  push(int d);           //добавление элемента
+  void display();               //вывод на экран
+  void pop ();
+};
+
+
+
+
+
+
+int main()
+{
+    setlocale   (LC_CTYPE, "rus");
+    srand( time( 0 ) );                   //для рандома
+
+    Stack s1;
+
+      cout<<"Введите количество элементов стека:\n";
+    int n;
+      cin>>n;
+
+      cout<<"Элементы стека:\n";
+    for (int i=1;i<=n;i++)
+     {
+          s1.push(1 + rand() % 10);
+     }
+
+    s1.display();
+
+    for(int i=n;i>=1;i--)
+      {
+          cout<<"\n      Удаляем элемент стека номер:"<<i<<endl;
+          s1.pop();
+          cout<<"      Полученный стек\n";
+          s1.display();
+      }
+
+     return 0;
+}
+
+//-------Вставить элемент в стек
+void Stack  ::  push(int d)
+  {
+      datagram *newdata = new datagram;   // выделяем память под новую структуру типа datagram
+      newdata -> data = d;
+      newdata -> next = first;
+      first = newdata;                                     // указатель типа datagram указывает на новую структуру типа  datagram
+  }
+
+//-------Убрать элемент из стека
+void Stack :: pop ()
+  {
+      datagram *temp = first  ->  next;
+      delete first;
+      first=temp;
+  }
+
+//-------Вывести стек на экран
+void Stack ::  display ()
+  {
+      datagram *temp = first;
+      if (temp == NULL)
+      {
+          cout<<" Стек пуст!!!\n";  // исключение при попытке показать пустой стек
+      }
+        else
+        {
+            while (temp !=  NULL)
+                {
+                    cout<<temp -> data<<endl;
+                    temp = temp -> next ;
+                }
+        }
+  }

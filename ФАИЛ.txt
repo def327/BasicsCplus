@@ -1,0 +1,41 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+
+
+
+int main()
+{
+    using namespace std;
+
+    const int SIZE=100;
+    int *a=new int[SIZE];
+    char *buff=new char[SIZE];
+    int *buff2=new int[SIZE];
+    for (int i=0;i<6;i++)
+      {
+          a[i]=i;
+      }
+
+    ofstream outfile("text.txt",ios::binary);
+    for(int i=0;i<6;i++)
+      {
+          outfile<<a[i]<<"\n";
+      }
+    outfile.close();
+    delete []a;
+    cout<<"Fail recorded\n";
+
+
+    ifstream infile("text.txt",ios::binary);
+    infile.read(buff,SIZE*sizeof(int));
+    infile.read(&buff,1);
+    cout<<buff<<"!";
+    infile.close();
+    
+    
+//    in.read((char*)&d,sizeof(double));
+
+
+}

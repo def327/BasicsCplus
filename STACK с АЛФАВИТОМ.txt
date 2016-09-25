@@ -1,0 +1,104 @@
+#include <iostream>
+#include <clocale>
+
+using namespace std;
+
+
+
+
+class Stack
+{
+  private:
+      char data;
+      Stack* head;
+      Stack* prev;
+
+  public:
+      Stack()
+        {
+            head  = NULL;
+        }
+       void push (char );
+       void show_stack();
+       void pop();
+       void load();
+};
+
+int main()
+{
+    setlocale   (LC_CTYPE, "rus");
+    Stack s1,s2;
+    s1.load();
+    s2=s1;
+    //--------–азкоменнтируйте дл€ проведени€ тестов!
+     cout<<"\¬ыведем стек s2 после того как он был побитово скопирован с s1, просле выполнени€ метода load над s1\n";
+   s2.show_stack();
+/*    cout<<"\n";
+    for (int i=0;i<23;i++)
+      {
+        s2.pop();
+      }
+     cout<<"\nнемного очистили стек\n";
+     s2.show_stack();
+     s2.pop();
+     s2.pop();
+     cout<<"\n теперь немного сами чистим стек очистили стек\n";
+      s2.show_stack();
+      s2.pop();
+      s2.show_stack();
+      */
+}
+
+void Stack::push(char d)
+{
+    Stack *newdata = new Stack;
+    newdata ->  data = d;
+    newdata -> prev = head;
+    head = newdata;
+
+}
+
+void Stack::show_stack()
+{
+    if (head ==NULL)
+    {
+       cout<<"Stack is empty!!!!"<<endl;
+    }
+        else
+          {
+              Stack* temp  = new Stack;
+              temp = head;
+              while (temp!=NULL)
+              {
+                  cout<< temp -> data<<endl;
+                  temp = temp -> prev;
+              }
+          }
+}
+
+void Stack::pop()
+{
+    if (head==NULL)
+        {
+            cout<<"Stack is empty!Please call the function 'push' to put a new element into the dynamic stack"<<endl;
+        }
+        else
+          {
+              Stack* temp = new Stack;
+              temp = head;
+              delete head;
+              head = temp -> prev;
+
+          }
+}
+
+void Stack::load()
+{
+    for(char letter = 'a' ;letter <= 'z'; letter++)
+      {
+          Stack *newdata = new Stack;
+          newdata ->  data = letter;
+          newdata -> prev = head;
+          head = newdata;
+      }
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+
+int func(int n) throw(int)
+{
+    if (n)
+    {
+        return n;
+    }
+     else
+     {
+       throw 10 ;
+     }
+}
+
+
+
+int main()
+{
+    int a=0;
+    try
+      {
+          func(a);
+      }
+      catch (int )
+        {
+           cout<<"Mistake!!!";
+        }
+}

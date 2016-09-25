@@ -1,0 +1,344 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <typeinfo>
+#include <list>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+
+class Lib_member
+{
+  private:
+      string person_name;
+      int book_count;
+      string date;
+  public:
+      string books[5];
+      ~Lib_member()
+        {
+        }
+      Lib_member()
+        {
+        }
+      Lib_member(string person_name)
+        {
+           this->person_name=person_name;
+           this->book_count=0;
+           this->date="***";
+        }
+      string get_person_name()
+        {
+           return this->person_name;
+        }
+      int get_book_count()
+        {
+           return this->book_count;
+        }
+      string get_date()
+        {
+           return this->date;
+        }
+      void set_person_name(string person_name)
+        {
+           this->person_name=person_name;
+        }
+      void set_book_count(int book_count)
+        {
+           this->book_count=book_count;
+        }
+      void set_date(string date)
+        {
+           this->date=date;
+        }
+      void display_member() const
+        {
+           cout<<this->person_name<<"--";
+           cout<<this->book_count<<"--";
+           cout<<this->date<<"--"<<"Take books: ";
+           for(int i=0;i<this->book_count;i++)
+             {
+                 cout<<i+1<<"th "<<books[i]<<"--";
+             }
+        }
+      bool operator==(const Lib_member&obj)
+       {
+          return ( this->person_name==obj.person_name)?true:false;
+       }
+      bool operator<(const Lib_member&obj)
+       {
+          return ( this->person_name<obj.person_name)?true:false;
+       }
+};
+// ‘ункциональные объекты дл€ контейнера <member_list>
+class displayLib_member
+{
+  public:
+      void operator()(const Lib_member&obj)const
+        {
+            obj.display_member();
+            cout<<"\n";
+        }
+};
+// класс дл€ обработки и хранени€ книг
+class Books
+{
+  private:
+      string books[10]=
+      {"'Life of Pi' by Yann Martel", "'The Girl with the Dragon' by Tattooby Stieg Larsson", "'The God of Small Things' by Arundhati Roy",
+      "'Out of Africa' by Isak Dinesen", "'Lord of the Flies' by William Golding","'The Book Thief' by Markus Zusak",
+      "'The Picture of Dorian Gray' by Oscar Wilde","'Crime and Punishment' by Fyodor Dostoyevsky", "'Dracula' by Bram Stoker",
+      "'The Great Gatsby' by F. Scott Fitzgerald"};
+      int count_books[10]={3,4,0,2,2,1,3,2,2,3};
+  public:
+      string get_book(int var)
+        {
+            --count_books[var];
+            return books[var];
+
+        }
+      string show_books(int var1)
+        {
+            return books[var1];
+        }
+      int  show_count_books(int var2)
+       {
+            return count_books[var2];
+       }
+};
+
+
+int main()
+{
+    //store the members of library
+    list<Lib_member>member_list;
+    list<Lib_member>::iterator iter;
+    Books books;    // объект дл€ хранени€ книг
+    bool flag_action=true;
+  while(flag_action!=false)
+  {
+      cout<<"\nLibrary base"<<endl;
+      cout<<"-----------------------------------------------------\n";
+      cout<<"-1- type '1' to add a new member\n";
+      cout<<"-2- type '2' to find the member of Library\n";
+      cout<<"-3- type '3' to show the members at the Library\n";
+      cout<<"-4- type '4' to add  books  for the member of Library\n";
+      cout<<"-5- type '5' to show The Library catalog \n";
+      cout<<"-6- type '6' to exit the program\n";
+      cout<<"-----------------------------------------------------\n";
+      int action;
+      cin>>action;    //првоерка на ввод
+      switch(action)
+        {
+        case 1:
+          {
+              flag_action=true;
+              //—оздаЄм нового члена библеотеки и инициализируем его пол€ инофрмацией
+              Lib_member *person=new Lib_member;
+              // его им€
+              cout<<"--Type the name of a new member of library:\n";
+              string name;
+              cin>>name;
+              //количество книг ввести проверку на на мах=5
+              cout<<"--Type a count of books to take for a new member of library:\n";
+              int book_count;
+              cin>>book_count;
+              //выводитьс€ перчень книг и возможность выбора
+              int number;
+              for(int i=0;i<book_count;i++)
+                {
+                    cout<<"---The Library catalog---\n";        //вывести перечень  книг библеотеки
+                    for(int j=0;j<10;j++)
+                      {
+                         cout<<j+1<<")"<<books.show_books(j)<<"("<<books.show_count_books(j)<<")\n";
+                      }
+                    cout<<"-----------------------------\n";
+                    bool have_it=false;     //флаг дл€ проверки  есть ли книга в наличии
+                    while(have_it==false)
+                    {
+                        cout<<"--Type the number from list to chose "<<i+1<<"th book a new member wants to take:\n";
+                        cin>>number;
+                        --number;
+                        if(books.show_count_books(number)==0)
+                          {
+                              have_it=false;
+                              cout<<"\nPlease chose another book!!! A count of "<<books.show_books(number)<<"=(0)"<<"\n";
+                          }
+                        if(books.show_count_books(number)!=0)
+                          {
+                              have_it=true;
+                              person->books[i]=books.get_book(number);
+                              cout<<"\n";
+                          }
+                    }
+                }
+              // когда их вернет
+              cout<<"--Type the date to return books:\n";
+              string date_return;
+              cin>>date_return;
+              // объ€вление полей объекта
+              person->set_person_name(name);
+              person->set_book_count(book_count);
+              person->set_date(date_return);
+              // закидываем его в очередь
+              member_list.push_back(*person);
+              // запись в файлы 'members' и 'books'
+              //members
+              ofstream os1("members.txt");
+              for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+                {
+                   os1<<(*iter).get_person_name()<<(*iter).get_book_count()<<(*iter).get_date()<<"\n";
+                }
+              os1.close();
+              //books
+              ofstream os2("books.txt");
+              for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+              {
+                 for(int i=0;i<(*iter).get_book_count();i++)
+                   {
+                      os2<<(*iter).books[i];
+                   }
+                os2<<"\n";
+              }
+              os2.close();
+              delete person;
+              break;
+          }
+        case 2:
+          {
+              flag_action=true;
+              cout<<"Type the name of the person to find at the base:\n";
+              string name_find;
+              cin>>name_find;
+              bool find_flag=false;
+              for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+                {
+                    if(name_find==(*iter).get_person_name())
+                      {
+                          (*iter).display_member();
+                          find_flag=true;
+                          break;
+                      }
+                }
+              if(find_flag==false)
+                {
+                  cout<<" There is no person with name '"<<name_find<<"'"<<endl;
+                }
+              break;
+          }
+        case 3:
+          {
+               flag_action=true;
+               // функциональный объект типа displayLib_member() выводит каждого кто записан в библеотеке
+               for_each(member_list.begin(),member_list.end(),displayLib_member());
+               break;
+          }
+        case 4:
+          {
+              flag_action=true;
+              //сначала находим члена библеотеки по имени
+              cout<<"Type the name of the person :\n";
+              string name_find;
+              cin>>name_find;
+              bool find_flag=false;
+              for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+                {
+                  if(name_find==(*iter).get_person_name())
+                      {
+                          (*iter).display_member();
+                          find_flag=true;
+                          cout<<"\nType a count of books to add for '"<<(*iter).get_person_name()<<"'\n";
+                          int want_add=0;   //проверка на количество сколько можно добавить
+                          cout<<"The member '"<<(*iter).get_person_name()<<"' can take not more than "<<5-(*iter).get_book_count()<<"books\n";
+                          cin>>want_add;    //сделать првоерку на возможность вз€ть книгу если он и так вз€л 5!!!
+                          int number;
+                          for(int i=(*iter).get_book_count(); i<(*iter).get_book_count()+want_add; i++)
+                              {
+                                  cout<<"---The Library catalog---\n";        //вывести перечень  книг библеотеки
+                                  for(int j=0;j<10;j++)
+                                    {
+                                        cout<<j+1<<")"<<books.show_books(j)<<"("<<books.show_count_books(j)<<")\n";
+                                    }
+                                  cout<<"-----------------------------\n";
+                                  bool have_it=false;     //флаг дл€ проверки  есть ли книга в наличии
+                                  while(have_it==false)
+                                    {
+                                        cout<<"The name of "<<i+1<<"th book:\n";
+                                        cin>>number;
+                                        --number;
+                                        if(books.show_count_books(number)==0)
+                                          {
+                                              have_it=false;
+                                              cout<<"\nPlease chose another book!!! A count of "<<books.show_books(number)<<"=(0)"<<"\n";
+                                          }
+                                        if(books.show_count_books(number)!=0)
+                                          {
+                                              have_it=true;
+                                            (*iter).books[i]=books.get_book(number);
+                                            cout<<"\n";
+                                          }
+                                    }
+                              }
+                          (*iter).set_book_count((*iter).get_book_count()+want_add);
+                          // запись в файлы 'members' и 'books'
+                          //members
+                          ofstream os1("members.txt");
+                          for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+                            {
+                                os1<<(*iter).get_person_name()<<(*iter).get_book_count()<<(*iter).get_date()<<"\n";
+                            }
+                          os1.close();
+                        //books
+                        ofstream os2("books.txt");
+                        for(iter=member_list.begin(); iter!=member_list.end(); iter++)
+                          {
+                              for(int i=0;i<(*iter).get_book_count();i++)
+                                {
+                                   os2<<(*iter).books[i];
+                                }
+                              os2<<"\n";
+                          }
+                          break;
+                      }
+                }
+               if( find_flag==false)
+                {
+                    cout<<" There is no person with name '"<<name_find<<"'"<<endl;
+                }
+              break;
+          }
+        case 5:
+          {
+              flag_action=true;
+              cout<<"---The Library catalog---\n";        //вывести перечень  католог книг
+              for(int j=0;j<10;j++)
+                {
+                    cout<<j+1<<")"<<books.show_books(j)<<"("<<books.show_count_books(j)<<")\n";
+                }
+              cout<<"-----------------------------\n";
+          }
+        case 6:
+          {
+              flag_action=false;
+              cout<<"\n----EXIT----\n";
+              break;
+          }
+        default:
+          {
+              flag_action=true;
+              break;
+          }
+      }
+  }
+    return 0;
+}
+
+
+
+
+
+
+

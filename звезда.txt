@@ -1,0 +1,62 @@
+#include <iostream>;
+#include <clocale>;
+#include<cstdlib>;
+#include <iomanip>;
+using namespace std ;
+
+
+ int    main    (   )
+{
+
+  int k;
+  int lg;
+  int mid;
+  int t;
+  int c;
+  setlocale   (LC_CTYPE, "rus");
+  cout<<"Введите нечётное число:\n";
+  cin>>lg;
+  k=lg/2;
+  mid=lg/2;
+  t=1;
+
+
+  //-----Вверх звезды
+    for (int i=1; i<=k+1; i++)
+        {
+
+              for ( int i=1;i<=mid;i++)  // для нулей слева
+                {
+                  cout<<"0";
+                }
+
+              for (int i=1;i<=t;i++)  // Для звёздочки
+                {
+                    cout<<"*";
+                }
+              for(int i=1;i<=mid;i++)
+                {
+                    cout<<"0";
+                }
+
+           t+=2;
+           mid--;
+            cout<<endl;
+        }
+
+ t=1;
+//--Низ  звездочки
+
+    for (int i=1;i<=k;i++)
+    {
+          for(int i=1;i<=lg/2;i++)
+          {
+              cout<<"0";
+          }
+
+        t-=2;
+        cout<<endl;
+    }
+
+
+}

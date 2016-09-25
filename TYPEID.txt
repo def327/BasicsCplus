@@ -1,0 +1,32 @@
+#include <iostream>
+#include <typeinfo>
+using namespace std;
+
+class Base
+{
+  public:
+    virtual void f() {}
+};
+
+class Del:public Base
+{
+
+};
+
+class Del2:public Base
+{
+
+};
+
+
+
+int main()
+{
+    int i;Base *p;
+      Del obj;
+      Del2 obj2;
+    cout<<typeid(i).name()<<endl;   //typeid используется для определения типа объекта или переменной
+    p=&obj2;
+    cout<<typeid(*p).name()<<endl;
+    return 0;
+}

@@ -1,0 +1,38 @@
+#include <iostream>
+
+using namespace std;
+
+
+class coord
+    {
+        private:
+          int x,y;
+        public:
+         coord(int m,int n)
+            {
+                x=m;
+                y=n;
+            }
+friend   ostream& operator<<(ostream&stream, coord&obj);
+    };
+
+ostream& operator<<(ostream&stream, coord&obj)
+   {
+        stream<<obj.x<<" "<<obj.y<<"\n";
+        return stream;
+   }
+
+ ostream& hw(ostream&stream)
+  {
+    stream<<"Hello world!";
+    return stream;
+  }
+
+
+int main()
+{
+    coord ob(5,8);
+    cout<<ob;
+    cout<<hw;
+    return 0;
+}
